@@ -54,7 +54,7 @@
                         </goals>
                         <configuration>
                             <workingDirectory>frontend</workingDirectory>
-                            <executable>npm.cmd</executable>
+                            <executable>cmd.exe</executable>
                             <arguments>
                                 <argument>install</argument>
                             </arguments>
@@ -68,7 +68,7 @@
                         </goals>
                         <configuration>
                             <workingDirectory>frontend</workingDirectory>
-                            <executable>npm.cmd</executable>
+                            <executable>cmd.exe</executable>
                             <arguments>
                                 <argument>run</argument>
                                 <argument>build</argument>
