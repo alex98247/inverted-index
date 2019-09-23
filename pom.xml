@@ -43,45 +43,38 @@
             </plugin>
 
             <plugin>
-                <groupId>com.github.eirslett</groupId>
-                <artifactId>frontend-maven-plugin</artifactId>
-                <version>1.0</version>
-                <configuration>
-                    <workingDirectory>frontend</workingDirectory>
-                </configuration>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
                 <executions>
-
-                    <execution>
-                        <id>install node and npm</id>
-                        <goals>
-                            <goal>install-node-and-npm</goal>
-                        </goals>
-                        <configuration>
-                            <nodeVersion>v4.2.1</nodeVersion>
-                            <npmVersion>3.5.3</npmVersion>
-                        </configuration>
-                    </execution>
-
                     <execution>
                         <id>npm install</id>
+                        <phase>generate-sources</phase>
                         <goals>
-                            <goal>npm</goal>
+                            <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <arguments>install</arguments>
+                            <workingDirectory>frontend</workingDirectory>
+                            <executable>npm.cmd</executable>
+                            <arguments>
+                                <argument>install</argument>
+                            </arguments>
                         </configuration>
                     </execution>
-
                     <execution>
                         <id>npm run build</id>
+                        <phase>generate-sources</phase>
                         <goals>
-                            <goal>npm</goal>
+                            <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <arguments>run start</arguments>
+                            <workingDirectory>frontend</workingDirectory>
+                            <executable>npm.cmd</executable>
+                            <arguments>
+                                <argument>run</argument>
+                                <argument>build</argument>
+                            </arguments>
                         </configuration>
                     </execution>
-
                 </executions>
             </plugin>
         </plugins>
