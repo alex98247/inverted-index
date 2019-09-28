@@ -12,7 +12,7 @@
     <artifactId>inverted-index</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>inverted-index</name>
-    <description>Demo project for Spring Boot</description>
+    <description>Project for web programming</description>
 
     <properties>
         <java.version>1.8</java.version>
@@ -32,6 +32,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
     </dependencies>
 
