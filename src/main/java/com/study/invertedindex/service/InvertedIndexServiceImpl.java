@@ -7,9 +7,7 @@ import com.study.invertedindex.repository.TextRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,6 +30,7 @@ public class InvertedIndexServiceImpl implements InvertedIndexService {
     public void addText(Text text) {
         text = textRepository.save(text);
         String[] words = text.getText().split(" ");
+        words = Arrays.stream(words).map(x -> x.toLowerCase()).distinct().toArray(String[]::new);
 
         for (String word : words) {
             Index index = indexRepository.findByWord(word);
@@ -49,11 +48,16 @@ public class InvertedIndexServiceImpl implements InvertedIndexService {
         }
     }
 
-    public List<Text> findTexts(List<String> words) {
-        List<Text> texts = new ArrayList<>();
+    public List<Text> findTextsWithWords(List<String> words) {
+        Map<String, Text> texts = new HashMap<>();
+        words = words.stream().map(x -> x.toLowerCase()).collect(Collectors.toList());
+
         for (String word : words) {
-            texts.addAll(findTexts(word));
+            Map<String, Text> findTexts = findTexts(word).stream().collect(Collectors.toMap(x -> word, x -> x));
+            texts.putAll(findTexts);
         }
+
+
         return texts;
     }
 }
