@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -18,8 +20,8 @@ public class InvertedIndexController {
     InvertedIndexService invertedIndexService;
 
     @GetMapping
-    public List<Text> getTexts(List<String> words) {
-        return invertedIndexService.findTexts(words);
+    public List<Text> getTexts(String word) {
+        return invertedIndexService.findTexts(Arrays.asList(word));
     }
 
     @PostMapping
