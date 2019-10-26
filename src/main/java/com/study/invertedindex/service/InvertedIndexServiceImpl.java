@@ -19,10 +19,14 @@ public class InvertedIndexServiceImpl implements InvertedIndexService {
     @Autowired
     TextRepository textRepository;
 
-    public List<Text> findTexts(String word) {
-        Index index = indexRepository.findByWord(word);
-        if (index == null) return Collections.EMPTY_LIST;
-        return index.getTextIds().stream()
+    public List<Text> findTexts(List<String> words) {
+        List<Index> indexes = indexRepository.findByWordIn(words);
+        if (indexes == null || indexes.isEmpty()) return Collections.EMPTY_LIST;
+
+        Set<String> textIds = new HashSet<>();
+        indexes.forEach(x -> textIds.addAll(x.getTextIds()));
+
+        return textIds.stream()
                 .map(x -> textRepository.findTextByTextId(x))
                 .collect(Collectors.toList());
     }
@@ -46,18 +50,5 @@ public class InvertedIndexServiceImpl implements InvertedIndexService {
 
             indexRepository.save(index);
         }
-    }
-
-    public List<Text> findTextsWithWords(List<String> words) {
-        Map<String, Text> texts = new HashMap<>();
-        words = words.stream().map(x -> x.toLowerCase()).collect(Collectors.toList());
-
-        for (String word : words) {
-            Map<String, Text> findTexts = findTexts(word).stream().collect(Collectors.toMap(x -> word, x -> x));
-            texts.putAll(findTexts);
-        }
-
-
-        return texts;
     }
 }
