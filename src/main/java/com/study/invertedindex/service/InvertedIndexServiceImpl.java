@@ -20,6 +20,7 @@ public class InvertedIndexServiceImpl implements InvertedIndexService {
     TextRepository textRepository;
 
     public List<Text> findTexts(List<String> words) {
+        words = words.stream().map(word -> word.toLowerCase()).collect(Collectors.toList());
         List<Index> indexes = indexRepository.findByWordIn(words);
         if (indexes == null || indexes.isEmpty()) return Collections.EMPTY_LIST;
 
@@ -33,8 +34,8 @@ public class InvertedIndexServiceImpl implements InvertedIndexService {
 
     public void addText(Text text) {
         text = textRepository.save(text);
-        String[] words = text.getText().split(" ");
-        words = Arrays.stream(words).map(x -> x.toLowerCase()).distinct().toArray(String[]::new);
+        String[] words = text.getText().replaceAll("\\p{P}", "").split("\\s+");
+        words = Arrays.stream(words).map(String::toLowerCase).distinct().toArray(String[]::new);
 
         for (String word : words) {
             Index index = indexRepository.findByWord(word);
