@@ -26,7 +26,7 @@ public class Text {
     }
     @Override
     public String toString() {
-        return "Text{textId=" + textId + "}";
+        return "{textId=" + textId + "}";
     }
 
 }

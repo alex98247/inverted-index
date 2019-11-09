@@ -44,6 +44,6 @@ public class Index {
 
     @Override
     public String toString() {
-        return "Index{id=" + id + ", world=" + word +  "textId=" + textIds + "}";
+        return "{id=" + id + ", world=" + word +  "textId=" + textIds + "}";
     }
 }

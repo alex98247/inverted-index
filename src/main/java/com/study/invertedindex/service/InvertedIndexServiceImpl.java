@@ -17,12 +17,23 @@ public class InvertedIndexServiceImpl implements InvertedIndexService {
 
     private Logger logger = LoggerFactory.getLogger(InvertedIndexService.class);
 
+    /**
+     * The index repository
+     */
     @Autowired
     IndexRepository indexRepository;
 
+    /**
+     * The text repository
+     */
     @Autowired
     TextRepository textRepository;
 
+    /**
+     * @param words
+     * @return Find texts by words. If none text would be found return empty list.
+     */
+    @Override
     public List<Text> findTexts(List<String> words) {
         logger.info("Find texts by words " + words);
         words = words.stream().map(String::toLowerCase).distinct().collect(Collectors.toList());
@@ -38,6 +49,12 @@ public class InvertedIndexServiceImpl implements InvertedIndexService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * @param text
+     *
+     * Add text to DB.
+     */
+    @Override
     public void addText(Text text) {
         text = textRepository.save(text);
         String[] words = text.getText().replaceAll("\\p{P}", "").split("\\s+");
