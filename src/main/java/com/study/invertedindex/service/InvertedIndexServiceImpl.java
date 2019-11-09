@@ -4,6 +4,8 @@ import com.study.invertedindex.model.Index;
 import com.study.invertedindex.model.Text;
 import com.study.invertedindex.repository.IndexRepository;
 import com.study.invertedindex.repository.TextRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,8 @@ import java.util.stream.Collectors;
 @Service
 public class InvertedIndexServiceImpl implements InvertedIndexService {
 
+    private Logger logger = LoggerFactory.getLogger(InvertedIndexService.class);
+
     @Autowired
     IndexRepository indexRepository;
 
@@ -20,10 +24,12 @@ public class InvertedIndexServiceImpl implements InvertedIndexService {
     TextRepository textRepository;
 
     public List<Text> findTexts(List<String> words) {
-        words = words.stream().map(word -> word.toLowerCase()).collect(Collectors.toList());
+        logger.info("Find texts by words " + words);
+        words = words.stream().map(String::toLowerCase).distinct().collect(Collectors.toList());
         List<Index> indexes = indexRepository.findByWordIn(words);
         if (indexes == null || indexes.isEmpty()) return Collections.EMPTY_LIST;
 
+        logger.info("Found indexes " + indexes);
         Set<String> textIds = new HashSet<>();
         indexes.forEach(x -> textIds.addAll(x.getTextIds()));
 

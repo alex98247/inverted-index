@@ -41,4 +41,9 @@ public class Index {
     public void setId(String id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "Index{id=" + id + ", world=" + word +  "textId=" + textIds + "}";
+    }
 }
