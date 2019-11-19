@@ -1,18 +1,11 @@
 package com.study.invertedindex.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
 import java.util.List;
 
-@Document(collection = "index")
 public class Index {
-    @Id
-    private String id;
     private String word;
     private List<String> textIds;
 
-    public Index(){}
     public Index(String word, List<String> textIds){
         this.word = word;
         this.textIds = textIds;
@@ -34,16 +27,8 @@ public class Index {
         this.textIds = textIds;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
     @Override
     public String toString() {
-        return "{id=" + id + ", world=" + word +  "textId=" + textIds + "}";
+        return "{world=" + word +  "textId=" + textIds + "}";
     }
 }

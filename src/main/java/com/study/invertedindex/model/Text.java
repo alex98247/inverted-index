@@ -1,13 +1,15 @@
 package com.study.invertedindex.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
-@Document(collection = "text")
 public class Text {
-    @Id
+
     private String textId;
     private String text;
+
+    public Text(){}
+
+    public Text(String text){
+        this.text = text;
+    }
 
     public String getTextId() {
         return textId;
